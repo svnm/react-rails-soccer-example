@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+
+ /* shared */
+ @import 'shared/variables';
+
+ /* components */
+ @import 'components/teams';
