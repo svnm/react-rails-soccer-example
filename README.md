@@ -5,7 +5,7 @@ a soccer app example using react-rails
 
 The usual Rails stuff:
 
-- `bundle install`
+- `bundle && npm i`
 - `rake db:migrate && rake db:test:prepare`
 - `rake rspec`
-- `rails s`
+- `foreman start -f Procfile.dev`
