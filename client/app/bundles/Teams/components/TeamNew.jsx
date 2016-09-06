@@ -1,12 +1,14 @@
-var initialState = {
-  name: '',
-  description: ''
-}
+import React, { PropTypes } from 'react';
 
-class TeamNew extends BaseComponent {
+var initialState = { name: '', description: '' }
+
+export default class TeamNew extends React.Component {
+  static propTypes = {
+    handleNewTeam: React.PropTypes.func.isRequired
+  }
+
   constructor(props) {
     super(props)
-    this._bind('handleChange', 'valid', 'handleSubmit')
     this.state = initialState
   }
 
@@ -23,6 +25,8 @@ class TeamNew extends BaseComponent {
 
   handleSubmit(e) {
     e.preventDefault();
+
+    /* add an update X-CSRF-Token as a util */
 
     fetch('', {
       method: 'POST',
@@ -44,25 +48,24 @@ class TeamNew extends BaseComponent {
   }
 
   render() {
+    const { name, description } = this.state
     return (
-      <form className='form-inline' onSubmit={this.handleSubmit}>
+      <form className='form-inline' onSubmit={e => this.handleSubmit(e)}>
         <div className='form-group'>
           <input type='text' className='form-control' placeholder='Description'
-                 name='description' value={this.state.description} onChange={this.handleChange} />
+                 name='description' value={description}
+                 onChange={e => this.handleChange(e)} />
         </div>
         <div className='form-group'>
           <input type='text' className='form-control' placeholder='Name'
-                 name='name' value={this.state.name} onChange={this.handleChange} />
+                 name='name' value={name}
+                 onChange={e => this.handleChange(e)} />
         </div>
 
-        <button type='submit' className='button' disabled={!this.valid}>
+        <button type='submit' className='button' disabled={!this.valid()}>
           Create
         </button>
       </form>
     )
   }
-}
-
-TeamNew.propTypes = {
-    handleNewTeam: React.PropTypes.func.isRequired
 }

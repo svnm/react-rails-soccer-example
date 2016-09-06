@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
+  get 'hello_world', to: 'hello_world#index'
   resources :teams
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
 
   namespace :cms do
     resources :teams

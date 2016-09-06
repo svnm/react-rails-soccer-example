@@ -1,8 +1,18 @@
-class Team extends BaseComponent {
-  constructor(props){
+import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom'
+
+var initialState = { edit: false }
+
+export default class Team extends React.Component {
+  static propTypes = {
+    team: React.PropTypes.object.isRequired,
+    handleDeleteTeam: React.PropTypes.func.isRequired,
+    handleEditTeam: React.PropTypes.func.isRequired
+  }
+
+  constructor(props) {
     super(props)
-    this._bind('handleDelete', 'handleToggle', 'handleEdit')
-    this.state = { edit: false }
+    this.state = initialState
   }
 
   handleDelete(e) {
@@ -32,7 +42,6 @@ class Team extends BaseComponent {
       name: ReactDOM.findDOMNode(this.refs.name).value,
       description: ReactDOM.findDOMNode(this.refs.description).value,
     }
-    console.log(data)
 
     fetch(url, {
       method: 'PUT',
@@ -60,13 +69,12 @@ class Team extends BaseComponent {
 
   showForm() {
     const { team } = this.props
-    console.log(team)
     return (
       <div>
         <span>{team.name}</span>
         <span>{team.description}</span>
-        <a className='button' onClick={this.handleToggle}>Edit</a>
-        <a className='button' onClick={this.handleDelete}>Delete</a>
+        <a className='button' onClick={e => this.handleToggle(e)}>Edit</a>
+        <a className='button' onClick={e => this.handleDelete(e)}>Delete</a>
       </div>
     )
   }
@@ -78,19 +86,15 @@ class Team extends BaseComponent {
         <input className='form-control' type='text' defaultValue={team.name} ref='name' />
         <input className='form-control' type='text' defaultValue={team.description} ref='description' />
 
-        <a className='button' onClick={this.handleEdit}>Update</a>
-        <a className='button' onClick={this.handleToggle}>Cancel</a>
+        <a className='button' onClick={e => this.handleEdit(e)}>Update</a>
+        <a className='button' onClick={e => this.handleToggle(e)}>Cancel</a>
       </div>
     );
   }
 
   render() {
-      return this.state.edit ? this.editForm() : this.showForm();
+    const { edit } = this.state
+
+    return edit ? this.editForm() : this.showForm()
   }
 }
-
-Team.propTypes = {
-    team: React.PropTypes.object.isRequired,
-    handleDeleteTeam: React.PropTypes.func.isRequired,
-    handleEditTeam: React.PropTypes.func.isRequired
-};
