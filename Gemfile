@@ -8,10 +8,11 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem "haml-rails", '~> 0.9'
-gem 'react-rails'
+gem "react_on_rails", "~> 6"
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'puma'
+gem 'devise'
 
 group :development, :test do
   gem 'capistrano'
@@ -29,3 +30,5 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
 end
+
+gem 'mini_racer', platforms: :ruby

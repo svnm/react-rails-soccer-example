@@ -5,3 +5,9 @@
 !/log/.keep
 /tmp
 .DS_Store
+# React on Rails
+npm-debug.log*
+node_modules
+
+# Generated js bundles
+/app/assets/webpack/*
