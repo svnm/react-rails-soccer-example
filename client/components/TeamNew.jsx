@@ -13,7 +13,6 @@ export default class TeamNew extends React.Component {
   }
 
   handleChange(e) {
-    console.log(e.target)
     var name = e.target.name
     var obj = {}
     obj['' + name] = e.target.value

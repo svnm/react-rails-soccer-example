@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
   namespace :cms do
     resources :teams
+    resources :users
   end
 end
