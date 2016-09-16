@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-
+import csrfHeader from '../lib/csrfHeader'
 var initialState = { name: '', description: '' }
 
 export default class TeamNew extends React.Component {
@@ -13,6 +13,7 @@ export default class TeamNew extends React.Component {
   }
 
   handleChange(e) {
+    console.log(e.target)
     var name = e.target.name
     var obj = {}
     obj['' + name] = e.target.value
@@ -30,11 +31,7 @@ export default class TeamNew extends React.Component {
 
     fetch('', {
       method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-      },
+      headers: csrfHeader(),
       credentials: 'same-origin',
       body: JSON.stringify(this.state)
     }).then( (response) => {
@@ -52,13 +49,13 @@ export default class TeamNew extends React.Component {
     return (
       <form className='form-inline' onSubmit={e => this.handleSubmit(e)}>
         <div className='form-group'>
-          <input type='text' className='form-control' placeholder='Description'
-                 name='description' value={description}
+          <input type='text' className='form-control' placeholder='Name'
+                 name='name' value={name}
                  onChange={e => this.handleChange(e)} />
         </div>
         <div className='form-group'>
-          <input type='text' className='form-control' placeholder='Name'
-                 name='name' value={name}
+          <input type='text' className='form-control' placeholder='Description'
+                 name='description' value={description}
                  onChange={e => this.handleChange(e)} />
         </div>
 

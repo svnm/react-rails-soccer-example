@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom'
-
-var initialState = { edit: false }
+import csrfHeader from '../lib/csrfHeader'
+let initialState = { edit: false }
 
 export default class Team extends React.Component {
   static propTypes = {
@@ -21,11 +21,7 @@ export default class Team extends React.Component {
 
     fetch(id, {
       method: 'DELETE',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-      },
+      headers: csrfHeader(),
       credentials: 'same-origin'
     })
     .then( (response) => {
