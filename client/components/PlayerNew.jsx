@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react';
 import csrfHeader from '../lib/csrfHeader'
 var initialState = { name: '', description: '' }
 
-export default class TeamNew extends React.Component {
+export default class PlayerNew extends React.Component {
   static propTypes = {
-    handleNewTeam: React.PropTypes.func.isRequired
+    handleNewPlayer: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -20,7 +20,7 @@ export default class TeamNew extends React.Component {
   }
 
   valid() {
-    return this.state.name && this.state.description
+    return this.state.name
   }
 
   handleSubmit(e) {
@@ -33,7 +33,7 @@ export default class TeamNew extends React.Component {
     }).then( (response) => {
       return response.json();
     }).then((data) => {
-      this.props.handleNewTeam(data);
+      this.props.handleNewPlayer(data);
       this.setState(initialState);
     }).catch( (error) => {
       console.log('request failed', error)
@@ -41,7 +41,7 @@ export default class TeamNew extends React.Component {
   }
 
   render() {
-    const { name, description } = this.state
+    const { name } = this.state
     return (
       <form className='form-inline' onSubmit={e => this.handleSubmit(e)}>
         <div className='form-group'>
@@ -49,12 +49,6 @@ export default class TeamNew extends React.Component {
                  name='name' value={name}
                  onChange={e => this.handleChange(e)} />
         </div>
-        <div className='form-group'>
-          <input type='text' className='form-control' placeholder='Description'
-                 name='description' value={description}
-                 onChange={e => this.handleChange(e)} />
-        </div>
-
         <button type='submit' className='button' disabled={!this.valid()}>
           Create
         </button>

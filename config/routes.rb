@@ -5,6 +5,6 @@ Rails.application.routes.draw do
 
   namespace :cms do
     resources :teams
-    resources :users
+    resources :players
   end
 end

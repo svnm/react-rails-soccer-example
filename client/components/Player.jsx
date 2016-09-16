@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom'
 import csrfHeader from '../lib/csrfHeader'
 let initialState = { edit: false }
 
-export default class Team extends React.Component {
+export default class Player extends React.Component {
   static propTypes = {
-    team: React.PropTypes.object.isRequired,
-    handleDeleteTeam: React.PropTypes.func.isRequired,
-    handleEditTeam: React.PropTypes.func.isRequired
+    player: React.PropTypes.object.isRequired,
+    handleDeletePlayer: React.PropTypes.func.isRequired,
+    handleEditPlayer: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -16,7 +16,7 @@ export default class Team extends React.Component {
   }
 
   handleDelete(e) {
-    var id = 'teams/' + this.props.team.id
+    var id = 'players/' + this.props.player.id
     e.preventDefault()
 
     fetch(id, {
@@ -25,7 +25,7 @@ export default class Team extends React.Component {
       credentials: 'same-origin'
     })
     .then( (response) => {
-      this.props.handleDeleteTeam(this.props.team);
+      this.props.handleDeletePlayer(this.props.player);
     }).catch( (error) => {
       console.log('request failed', error)
     })
@@ -33,22 +33,21 @@ export default class Team extends React.Component {
 
   handleEdit(e) {
     e.preventDefault();
-    var url = 'teams/' + this.props.team.id
+    var url = 'players/' + this.props.player.id
     var data = {
-      name: ReactDOM.findDOMNode(this.refs.name).value,
-      description: ReactDOM.findDOMNode(this.refs.description).value,
+      name: ReactDOM.findDOMNode(this.refs.name).value
     }
 
     fetch(url, {
       method: 'PUT',
       headers: csrfHeader(),
       credentials: 'same-origin',
-      body: JSON.stringify({ team: data })
+      body: JSON.stringify({ player: data })
     }).then( (response) => {
       return response.json()
     }).then((data) => {
       this.setState({ edit: false })
-      this.props.handleEditTeam(this.props.team, data)
+      this.props.handleEditPlayer(this.props.player, data)
     }).catch( (error) => {
       console.log('request failed', error)
     })
@@ -60,11 +59,10 @@ export default class Team extends React.Component {
   }
 
   showForm() {
-    const { team } = this.props
+    const { player } = this.props
     return (
       <div>
-        <span>{team.name}</span>
-        <span>{team.description}</span>
+        <span>{player.name}</span>
         <a className='button' onClick={e => this.handleToggle(e)}>Edit</a>
         <a className='button' onClick={e => this.handleDelete(e)}>Delete</a>
       </div>
@@ -72,12 +70,10 @@ export default class Team extends React.Component {
   }
 
   editForm() {
-    const { team } = this.props
+    const { player } = this.props
     return (
       <div>
-        <input className='form-control' type='text' defaultValue={team.name} ref='name' />
-        <input className='form-control' type='text' defaultValue={team.description} ref='description' />
-
+        <input className='form-control' type='text' defaultValue={player.name} ref='name' />
         <a className='button' onClick={e => this.handleEdit(e)}>Update</a>
         <a className='button' onClick={e => this.handleToggle(e)}>Cancel</a>
       </div>
@@ -86,7 +82,6 @@ export default class Team extends React.Component {
 
   render() {
     const { edit } = this.state
-
     return edit ? this.editForm() : this.showForm()
   }
 }

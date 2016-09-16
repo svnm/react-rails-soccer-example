@@ -12,7 +12,6 @@ export default class Teams extends React.Component {
 
   constructor(props, context) {
     super(props, context);
-    console.log(props)
     this.state = { teams: props.data }
   }
 
