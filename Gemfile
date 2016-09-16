@@ -12,7 +12,7 @@ gem "react_on_rails", "~> 6"
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'puma'
-gem 'bcrypt'
+gem 'devise'
 
 group :development, :test do
   gem 'capistrano'
